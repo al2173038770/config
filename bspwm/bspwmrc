@@ -1,0 +1,38 @@
+#!/bin/sh
+
+$HOME/.config/polybar/launch.sh 
+
+sxhkd &
+nitrogen --restore &
+picom -f &
+
+external_monitor=$(xrandr --query | grep 'VGA-1')
+xrandr --output LVDS-1 --primary --mode 1366x768 --rotate normal
+bspc monitor LVDS-1 -d 1 2 3 4 5 6 7 8 9 10 
+
+#	if [[ $external_monitor = *disconnected* ]]; then
+#	   xrandr --output LVDS-1 --primary --mode 1366x768 --rotate normal
+#	   bspc monitor LVDS-1 -d 1 2 3 4 5 6 7 8 9 10 
+#	elif [[ $external_monitor = *connected* ]]; then
+#	   xrandr --output VGA-1 --primary --mode 1366x768 --rotate normal --output LVDS-1 --mode 1366x768 --rotate normal --right-of VGA-1
+#	   bspc monitor VGA-1 	-d 1 2 3 4 5 
+#	  bspc monitor LVDS-1 -d 6 7 8 9 10
+#	fi
+
+bspc config border_width        2
+bspc config window_gap		5 
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a obs-studio state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+
+bspc rule -a arduino state=floating
+bspc rule -a zoom state=floating
+bspc rule -a spectacle state=floating
+
